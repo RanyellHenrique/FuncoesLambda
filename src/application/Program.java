@@ -18,9 +18,9 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("Enter full file path:");
+		System.out.print("Enter full file path: ");
 		String path = sc.nextLine();
-		System.out.println("Enter salary:");
+		System.out.print("Enter salary: ");
 		double salario = sc.nextDouble();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(path))){
@@ -40,9 +40,16 @@ public class Program {
 					.filter(s -> s.getSalario() > salario)
 					.map(s -> s.getEmail()).sorted(comp)
 					.collect(Collectors.toList());
+			
+			double salariosComM = list.stream()
+					.filter(s -> s.getName().charAt(0) == 'M')
+					.map(s -> s.getSalario())
+					.reduce(0.0 , (x,y) -> x + y );
 					
+					System.out.println("Email of people whose salary is more than " + salario + " :");
 					salariosMaiores.forEach(System.out::println);
-		
+					System.out.println("Sum of salary from people whose name starts with 'M': " + String.format("%.2f", salariosComM));
+					
 		}catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
